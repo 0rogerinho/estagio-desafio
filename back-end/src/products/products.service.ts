@@ -58,10 +58,11 @@ export class ProductsService {
   }
 
   async delete(user_id: string, deleteProductDto: DeleteProductDto) {
-    await this.projectModel.findOneAndDelete({
+    const product = await this.projectModel.findOneAndDelete({
       _id: deleteProductDto.id,
       user_id: user_id,
     });
-    return { message: 'deleted successful' };
+
+    if (product === null) return { message: 'deleted successful' };
   }
 }

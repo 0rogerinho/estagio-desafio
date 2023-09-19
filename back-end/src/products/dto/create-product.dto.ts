@@ -1,10 +1,10 @@
 import {
-  IsNumber,
+  IsNumberString,
   IsOptional,
   IsString,
-  Min,
   MinLength,
 } from 'class-validator';
+import { IsNumberStringValidation } from 'src/validators/validate.number.string';
 
 export class CreateProductDto {
   @IsString()
@@ -18,7 +18,11 @@ export class CreateProductDto {
   @IsOptional()
   img?: string;
 
-  @IsNumber()
-  @Min(1)
+  @IsNumberString()
+  @IsNumberStringValidation()
   price: number;
+
+  constructor() {
+    this.price = +this.price;
+  }
 }

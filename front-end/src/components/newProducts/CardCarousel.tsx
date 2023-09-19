@@ -54,6 +54,7 @@ const CardCarousel = ({ title, img, price, stock, indexProduct }: test) => {
     display: 'flex',
     flexDirection: 'column',
     border: '1px solid #737373',
+    width: '400px',
     height: '350px',
     overflow: 'visible',
     borderRadius: '10px',
@@ -95,6 +96,7 @@ const CardCarousel = ({ title, img, price, stock, indexProduct }: test) => {
           fontSize: '1.2rem',
           fontWeight: 700,
           borderTop: '1px solid #737373',
+          ':hover': { background: '#AC0000' },
         }}
       >
         Buy

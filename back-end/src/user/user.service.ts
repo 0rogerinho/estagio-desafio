@@ -40,7 +40,9 @@ export class UserService {
   }
 
   findById(id: string) {
-    return this.userModel.findById({ _id: id }, '-password');
+    return this.userModel
+      .findById({ _id: id }, '-password')
+      .populate('products');
   }
 
   findOne(user: { email: string }) {
