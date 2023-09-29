@@ -12,14 +12,15 @@ import ConfirmDelete from './ConfirmDelete';
 import patchUsername from '../../api/patchUsername';
 
 const Perfil = () => {
-  const { dataUser } = getUser();
-  const { response, error } = patchUsername();
-
   const [username, setUsername] = useState('');
   const [open, setOpen] = useState(false);
 
+  const { dataUser } = getUser();
+  const { response, error } = patchUsername();
+
   function handleClick() {
     response({ username });
+    console.log(error);
   }
 
   function handleOpen() {

@@ -9,22 +9,14 @@ import { Model } from 'mongoose';
 import { DeleteProductDto } from './dto/delete-product.dto';
 import { RemoveProduct } from './dto/remove-product.dto';
 import { SearchProductDto } from './dto/search-product.dtp';
-import { UploadService } from 'src/upload/upload.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Product.name) private readonly projectModel: Model<Product>,
-    private readonly uploadService: UploadService,
   ) {}
 
-  async create(
-    user_id: string,
-    urlImg: string,
-    createProductDto: CreateProductDto,
-  ) {
-    createProductDto.img = urlImg;
-
+  async create(user_id: string, createProductDto: CreateProductDto) {
     return await this.projectModel.create({ user_id, ...createProductDto });
   }
 

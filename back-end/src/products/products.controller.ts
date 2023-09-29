@@ -7,7 +7,6 @@ import {
   Req,
   Delete,
   UseInterceptors,
-  UploadedFile,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { ProductsService } from './products.service';
@@ -18,29 +17,20 @@ import { DeleteProductDto } from './dto/delete-product.dto';
 import { RemoveProduct } from './dto/remove-product.dto';
 import { SearchProductDto } from './dto/search-product.dtp';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { UploadService } from 'src/upload/upload.service';
 
 @Controller('products')
 export class ProductsController {
-  constructor(
-    private readonly productsService: ProductsService,
-    private uploadService: UploadService,
-  ) {}
+  constructor(private readonly productsService: ProductsService) {}
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   async create(
-    @UploadedFile() file: Express.Multer.File,
     @Req() req: Request,
     @Body() createProductDto: CreateProductDto,
   ) {
     const user_id = req['User']._id;
 
-    const img = await this.uploadService.create(file);
-
-    const urlImg = await this.uploadService.findImg(img);
-
-    return this.productsService.create(user_id, urlImg, createProductDto);
+    return this.productsService.create(user_id, createProductDto);
   }
 
   @Public()

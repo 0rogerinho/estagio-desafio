@@ -9,8 +9,8 @@ interface Product {
   stock: number;
 }
 
-const Annouce = () => {
-  const [img, setImg] = useState<any | null>('');
+const Announce = () => {
+  const [img, setImg] = useState<File | null>(null);
   const [product, setProduct] = useState<Product>({
     name: '',
     description: '',
@@ -26,15 +26,22 @@ const Annouce = () => {
       ...product,
       [name]: value,
     });
-
-    console.log(img);
+    console.log(name);
   };
+
+  function handleImg({ target }: ChangeEvent<HTMLInputElement>) {
+    if (target.files && target.files[0]) {
+      setImg(target.files[0]);
+    }
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    response(product);
-    console.log(product);
+    if (img) {
+      response(product, img);
+      console.log(product);
+    }
   };
 
   return (
@@ -55,7 +62,7 @@ const Annouce = () => {
               fullWidth
               label="Title"
               type="text"
-              name="title"
+              name="name"
               value={product.name}
               onChange={handleChange}
             />
@@ -71,16 +78,7 @@ const Annouce = () => {
             />
           </Grid>
           <Grid item xs={12}>
-            <input
-              name="img"
-              type="file"
-              value={img}
-              onChange={({ target }) => {
-                if (target.files && target.files[0]) {
-                  setImg(target.files[0]);
-                }
-              }}
-            />
+            <input name="img" type="file" onChange={handleImg} />
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -113,4 +111,4 @@ const Annouce = () => {
   );
 };
 
-export default Annouce;
+export default Announce;

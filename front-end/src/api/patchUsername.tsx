@@ -8,21 +8,18 @@ type IUpdateUsername = {
 
 const patchUsername = () => {
   //eslint-disable-next-line react-hooks/rules-of-hooks
-  const [error, setError] = useState<IUpdateUsername | null>(null);
+  const [error, setError] = useState<true | false>(false);
 
   async function response({ username }: IUpdateUsername) {
     try {
-      const response = await HTTP.patch('/user/update', {
-        username,
-      });
-
-      const json = response.data;
-
-      setError(json);
+      await HTTP.patch('/user/update', { username });
 
       window.location.reload();
     } catch (error) {
-      if (error instanceof AxiosError) setError(error.response?.data.message);
+      if (error instanceof AxiosError)
+        throw new Error(error.response?.data.message);
+
+      setError(true);
     }
   }
 
