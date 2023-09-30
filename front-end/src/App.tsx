@@ -9,6 +9,7 @@ import ProductRoutes from './Routes/ProductRoutes';
 import Perfil from './components/perfil/Perfil';
 import Announce from './components/announce/Announce';
 import ControlPanelPage from './pages/ControlPanelPage';
+import Dashboard from './components/dashboard/Dashboard';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/controlpanel/*" element={<ControlPanelPage />}>
               <Route path="perfil" element={<Perfil />} />
               <Route path="announce" element={<Announce />} />
+              <Route path="dashboard" element={<Dashboard />} />
             </Route>
           </Routes>
         </Product>

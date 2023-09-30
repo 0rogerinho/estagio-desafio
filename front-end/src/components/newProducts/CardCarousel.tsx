@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  CircularProgress,
   Typography,
 } from '@mui/material';
 import getProducts from '../../api/getProducts';
@@ -18,7 +19,7 @@ type test = {
 };
 
 const CardCarousel = ({ title, img, price, stock, indexProduct }: test) => {
-  const { products } = getProducts();
+  const { products, load } = getProducts();
   const { setProducts } = UseProductContext();
 
   const navigate = useNavigate();
@@ -53,6 +54,8 @@ const CardCarousel = ({ title, img, price, stock, indexProduct }: test) => {
   const classCard = {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     border: '1px solid #737373',
     width: '400px',
     height: '350px',
@@ -62,45 +65,51 @@ const CardCarousel = ({ title, img, price, stock, indexProduct }: test) => {
 
   return (
     <Card sx={classCard}>
-      <CardMedia
-        component="img"
-        image={img}
-        style={{
-          objectFit: 'contain',
-          maxHeight: 150,
-          borderBottom: '1px solid #737373',
-        }}
-      />
+      {load ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <CardMedia
+            component="img"
+            image={img}
+            style={{
+              objectFit: 'contain',
+              maxHeight: 150,
+              borderBottom: '1px solid #737373',
+            }}
+          />
 
-      <CardContent sx={classContent}>
-        <Typography component="div" variant="h6">
-          {titleLimit}...
-        </Typography>
-        <Typography variant="h5" fontWeight={700} color="black">
-          R$ {price?.toString().replace(/\./, ',')}
-        </Typography>
-        <Typography variant="body2" color="text.primary">
-          (Only {stock} left in stock)
-        </Typography>
-      </CardContent>
+          <CardContent sx={classContent}>
+            <Typography component="div" variant="h6">
+              {titleLimit}...
+            </Typography>
+            <Typography variant="h5" fontWeight={700} color="black">
+              R$ {price?.toString().replace(/\./, ',')}
+            </Typography>
+            <Typography variant="body2" color="text.primary">
+              (Only {stock} left in stock)
+            </Typography>
+          </CardContent>
 
-      <Button
-        onClick={handleClick}
-        fullWidth
-        variant="contained"
-        sx={{
-          height: '120px',
-          background: '#FF0A0A',
-          borderRadius: '0px 0px 4px 4px',
-          textTransform: 'none',
-          fontSize: '1.2rem',
-          fontWeight: 700,
-          borderTop: '1px solid #737373',
-          ':hover': { background: '#AC0000' },
-        }}
-      >
-        Buy
-      </Button>
+          <Button
+            onClick={handleClick}
+            fullWidth
+            variant="contained"
+            sx={{
+              height: '120px',
+              background: '#FF0A0A',
+              borderRadius: '0px 0px 4px 4px',
+              textTransform: 'none',
+              fontSize: '1.2rem',
+              fontWeight: 700,
+              borderTop: '1px solid #737373',
+              ':hover': { background: '#AC0000' },
+            }}
+          >
+            Buy
+          </Button>
+        </>
+      )}
     </Card>
   );
 };

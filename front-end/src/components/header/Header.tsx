@@ -72,9 +72,14 @@ export const Header = () => {
         <Box sx={{ flexGrow: 5 }}></Box>
 
         {dataUser && (
-          <Box display="flex">
-            <Avatar>{dataUser?.substring(0, 1)}</Avatar>
-            <Button variant="text" onClick={() => localStorage.clear}>
+          <Box display="flex" gap={2}>
+            <div
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/controlpanel/perfil')}
+            >
+              <Avatar>{dataUser?.substring(0, 2)}</Avatar>
+            </div>
+            <Button variant="text" onClick={() => localStorage.clear()}>
               logout
             </Button>
           </Box>
